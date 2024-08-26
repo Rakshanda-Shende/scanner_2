@@ -29,6 +29,10 @@
 
   <title>camcode_example</title>
   <link rel="manifest" href="manifest.json">
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "3334396064";
+  </script>
   <script src="flutter.js" defer></script>
 
 </head>
@@ -51,7 +55,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('flutter-first-frame', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js?v=2689154888');
+        navigator.serviceWorker.register('flutter_service_worker.js?v=3334396064');
       });
     }
   </script>
