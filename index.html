@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -9,41 +8,94 @@
     The path provided below has to start and end with a slash "/" in order for
     it to work correctly.
 
-    Fore more details:
+    For more details:
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
   -->
-  <!--  <base href="/">-->
+  <!--  <base href="/rk-web-register/">-->
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Demonstrates how to use the camcode plugin.">
+  <meta name="description" content="Online Ordering App Web + Mobile">
+  <meta name="theme-color" content="#FFFFFF">
 
-  <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="camcode_example">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <!-- Main Favicon -->
+  <link rel="icon" href="icons/hotelkeyicon.png">
 
-  <title>camcode_example</title>
+  <!-- ALTERNATIVE <link rel="icon" type="image/x-icon" href="favicon.ico" /> -->
+  <meta name="msapplication-TileColor" content="#6200EA">
   <link rel="manifest" href="manifest.json">
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "170424706";
+  <title>Online Ordering</title>
+  <!--  <script defer src="main.dart.js" type="application/javascript"></script>-->
+  <script type="text/javascript">
+       window.flutterWebRenderer = "html";
+       var datetime = new Date();
+<!--       console.log("2.2.0 Version:");-->
+<!--          console.log(datetime);-->
   </script>
-  <script src="flutter.js" defer></script>
+
+<!--  <script src="main.dart.js" type="application/javascript"></script>-->
+  <style>
+.loading {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-right: auto;
+     margin: 0;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     -ms-transform: translate(-50%, -50%);
+     transform: translate(-50%, -50%);
+   }
+
+   .loader {
+     border: 2px solid #ffffff;
+ border-radius: 50%;
+ border-top: 2px solid #64B5F6;
+ border-right: 2px solid #64B5F6;
+ border-bottom: 2px solid #64B5F6;
+     width: 60px;
+     height: 60px;
+     -webkit-animation: spin 1.4s linear infinite;
+     animation: spin 1.4s linear infinite;
+   }
+
+   @-webkit-keyframes spin {
+     0% {
+       -webkit-transform: rotate(0deg);
+     }
+     100% {
+       -webkit-transform: rotate(360deg);
+     }
+   }
+
+   @keyframes spin {
+     0% {
+       transform: rotate(0deg);
+     }
+     100% {
+       transform: rotate(360deg);
+     }
+   }
+   body {
+      font-family: 'montserrat'; /* Use the custom font */
+    }
+   </style>
+  <!--  <script src="//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>-->
+  <!--  <script type="text/javascript">-->
+  <!--    pdfjsLib.GlobalWorkerOptions.workerSrc = "//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.worker.min.js";-->
+  <!--</script>-->
   <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
   <script src="js/barcode.js"></script>
 </head>
-
 <body>
 
-
-<!-- This script installs service_worker.js to provide PWA functionality to
-     application. For more information, see:
-     https://developers.google.com/web/fundamentals/primers/service-workers -->
 <script>
   if ('serviceWorker' in navigator) {
 window.addEventListener('load', function(ev) {
@@ -62,8 +114,107 @@ return appRunner.runApp();
       loadMainDartJs();
     }
 </script>
-<!--<script src="main.dart.js" type="application/javascript"></script>-->
 
+<!--<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>-->
+<!-- This script installs service_worker.js to provide PWA functionality to
+     application. For more information, see:
+     https://developers.google.com/web/fundamentals/primers/service-workers -->
+
+<div class="loading">
+  <div class="loader"></div>
+</div>
+<script src="flutter.js" defer></script>
+<script>
+  // This is where we update the serviceWorkerVersion
+  var serviceWorkerVersion = '"313467094"';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js" type="text/javascript"></script>
+<script type="text/javascript">
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.worker.min.js";
+  pdfRenderOptions = {
+    cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/cmaps/',
+    cMapPacked: true,
+  }
+</script>
+<script>
+
+
+<!--    const serviceWorkerVersion = "313467094";-->
+    var scriptLoaded = false;
+    function loadMainDartJs() {
+      if (scriptLoaded) {
+        return;
+      }
+      scriptLoaded = true;
+      var scriptTag = document.createElement('script');
+      scriptTag.src = 'main.dart.js';
+      scriptTag.type = 'application/javascript';
+      document.body.append(scriptTag);
+    }
+    loadMainDartJs();
+
+    if ('serviceWorker' in navigator) {
+      // Service workers are supported. Use them.
+      window.addEventListener('load', function () {
+        // Wait for registration to finish before dropping the <script> tag.
+        // Otherwise, the browser will load the script multiple times,
+        // potentially different versions.
+
+        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+
+        navigator.serviceWorker.register(serviceWorkerUrl)
+          .then((reg) => {
+            function waitForActivation(serviceWorker) {
+              serviceWorker.addEventListener('statechange', () => {
+                if (serviceWorker.state == 'activated') {
+                  console.log('Installed new service worker.');
+                  loadMainDartJs();
+                }
+              });
+            }
+            if (!reg.active && (reg.installing || reg.waiting)) {
+              // No active web worker and we have installed or are installing
+              // one for the first time. Simply wait for it to activate.
+              waitForActivation(reg.installing ?? reg.waiting);
+            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+              // When the app updates the serviceWorkerVersion changes, so we
+              // need to ask the service worker to update.
+              console.log('New service worker available.');
+              reg.update();
+              waitForActivation(reg.installing);
+            } else {
+              // Existing service worker is still good.
+              console.log('Loading app from service worker.');
+              loadMainDartJs();
+            }
+               _flutter.loader.load({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function (engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(function (appRunner) {
+        return appRunner.runApp();
+      });
+          });
+
+        // If service worker doesn't succeed in a reasonable amount of time,
+        // fallback to plaint <script> tag.
+        setTimeout(() => {
+          if (!scriptLoaded) {
+            console.warn(
+              'Failed to load app from service worker. Falling back to plain <script> tag.',
+            );
+            loadMainDartJs();
+          }
+        }, 4000);
+      });
+    } else {
+      // Service workers not supported. Just drop the <script> tag.
+      loadMainDartJs();
+    }
+
+  </script>
 </body>
-
 </html>
+
